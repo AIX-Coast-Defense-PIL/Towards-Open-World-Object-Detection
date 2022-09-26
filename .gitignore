@@ -1,1 +1,4 @@
 datasets/
+detectron2/
+detectron2.egg-info/
+output/
