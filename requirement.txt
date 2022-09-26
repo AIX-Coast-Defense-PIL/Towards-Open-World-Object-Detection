@@ -7,10 +7,7 @@ chardet==4.0.0
 cloudpickle==1.6.0
 cycler==0.10.0
 Cython==0.29.23
-dataclasses==0.8
--e git+https://github.com/JosephKJ/OWOD.git@f7b20ad41c9f5bd3e5b5e82d7f90b8f670a57df9#egg=detectron2
 future==0.18.2
-fvcore==0.1.1.dev200512
 google-auth==1.30.0
 google-auth-oauthlib==0.4.4
 grpcio==1.37.1
@@ -22,11 +19,10 @@ Markdown==3.3.4
 matplotlib==3.3.4
 mock==4.0.3
 mplcursors==0.4
-numpy==1.19.5
+numpy==1.23.3
 oauthlib==3.1.0
 pandas==1.1.5
 Pillow==8.2.0
-pkg-resources==0.0.0
 portalocker==2.3.0
 protobuf==3.16.0
 pyasn1==0.4.8
@@ -49,11 +45,10 @@ tensorboard==2.5.0
 tensorboard-data-server==0.6.1
 tensorboard-plugin-wit==1.8.0
 termcolor==1.1.0
-torch==1.6.0
-torchvision==0.7.0
 tqdm==4.60.0
 typing-extensions==3.10.0.0
 urllib3==1.26.4
 Werkzeug==1.0.1
 yacs==0.1.8
 zipp==3.4.1
+fvcore==0.1.1.dev200512
