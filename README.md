@@ -20,17 +20,35 @@ pip install -r requirements.txt
   python -m pip install 'git+https://github.com/facebookresearch/detectron2.git'
   python -m pip install -e ./
   ```
-
+  - 이때 detectron2를 인식하지 못하는 문제가 발생하면, 아래 명령어를 입력해준다.
+  ```
+  pip install fvcore==0.1.1.dev200512
+  ```
 ## Dataset setting
 
 (1) Create folder datasets/VOC2007
 
 (2) Put Annotations and JPEGImages inside datasets/VOC2007
-- download data from [google drive 1](https://drive.google.com/drive/folders/1Sr4_q0_m2f2SefoebB25Ix3N1VIAua0w), [google drive 2](https://drive.google.com/file/d/1TdBylqdZ9VjEitW0pondNRqG2AhDirx_/view?usp=sharing)
+- download data from [google drive 1](https://drive.google.com/drive/folders/1Sr4_q0_m2f2SefoebB25Ix3N1VIAua0w)
+- 위 링크 파일을 wget으로 바로 받고 싶을 경우 아래 명령어를 사용할 수 있다.
+명령어로 다운 후, 다운로드된 파일명을 .zip으로 바꾸고, unzip해 준다.
+```
+wget --load-cookies ~/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies ~/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=16lqUlDR8WwByV0CUOaJ0o-_zNuUAmyjY' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=16lqUlDR8WwByV0CUOaJ0o-_zNuUAmyjY" -O Annotations && rm -rf ~/cookies.txt
+```
+```
+wget --load-cookies ~/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies ~/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1I2Nx4S6XELRpYqHqqEA-R7mt3OK5DMJH' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1I2Nx4S6XELRpYqHqqEA-R7mt3OK5DMJH" -O JPEGImages.zip && rm -rf ~/cookies.txt
+```
 
 (3) Create folder datasets/VOC2007/ImageSets/Main
 
 (4) Put the content of datasets/OWOD_imagesets inside datasets/VOC2007/ImageSets/Main
+
+
+## basic train command
+```
+python tools/train_net.py --num-gpus 1 --config-file OWOD/t1/t1_train.yaml SOLVER.IMS_PER_BATCH 4 SOLVER.BASE_LR 0.005
+```
+
 
 ## Reference
 
