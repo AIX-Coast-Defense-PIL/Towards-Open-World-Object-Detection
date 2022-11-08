@@ -46,17 +46,27 @@ def update_label_based_on_energy(logits, classes, unk_dist, known_dist):
             cls[i] = unknown_class_index
     return cls
 
+# MODEL_PATH = "output/seaships/basic02/"
+# MODEL_PATH = "output/pascalVOC/basic01/"
+MODEL_PATH = "output/pascalVOCnSeaShips/basic01/"
+IMAGES_PATH = "datasets/VOC2007/JPEGImages/"
+# IMAGES_PATH = "datasets/VOC2007_seaships/JPEGImages/"
+IMAGES_PATH = "datasets/custom/"
+
+images = os.listdir(IMAGES_PATH)
+# print(images)
+
 # Get image
-fnum = '348006'
-file_name = '000000' + fnum
-im = cv2.imread("/home/fk1/workspace/OWOD/datasets/VOC2007/JPEGImages/" + file_name + ".jpg")
+# file_name = "000000111788.jpg"
+file_name = "unknown01.jpeg"
+im = cv2.imread(IMAGES_PATH + file_name)
 # model = '/home/fk1/workspace/OWOD/output/old/t1_20_class/model_0009999.pth'
 # model = '/home/fk1/workspace/OWOD/output/t1_THRESHOLD_AUTOLABEL_UNK/model_final.pth'
 # model = '/home/fk1/workspace/OWOD/output/t1_clustering_with_save/model_final.pth'
 # model = '/home/fk1/workspace/OWOD/output/t2_ft/model_final.pth'
 # model = '/home/fk1/workspace/OWOD/output/t3_ft/model_final.pth'
-model = '/home/fk1/workspace/OWOD/output/t4_ft/model_final.pth'
-cfg_file = '/home/fk1/workspace/OWOD/configs/OWOD/t1/t1_test.yaml'
+model = MODEL_PATH + 'model_final.pth'
+cfg_file = 'configs/OWOD/t1/t1_test.yaml'
 
 
 # Get the configuration ready
@@ -77,7 +87,7 @@ outputs = predictor(im)
 
 print('Before' + str(outputs["instances"].pred_classes))
 
-param_save_location = os.path.join('/home/fk1/workspace/OWOD/output/t1_clustering_val/energy_dist_' + str(20) + '.pkl')
+param_save_location = os.path.join(MODEL_PATH + 'energy_dist_' + str(20) + '.pkl')
 params = torch.load(param_save_location)
 unknown = params[0]
 known = params[1]
@@ -87,9 +97,9 @@ known_dist = create_distribution(known['scale_known'], known['shape_known'], kno
 instances = outputs["instances"].to(torch.device("cpu"))
 dev =instances.pred_classes.get_device()
 classes = instances.pred_classes.tolist()
-logits = instances.logits
-classes = update_label_based_on_energy(logits, classes, unk_dist, known_dist)
-classes = torch.IntTensor(classes).to(torch.device("cuda"))
+# logits = instances.logits
+# classes = update_label_based_on_energy(logits, classes, unk_dist, known_dist)
+# classes = torch.IntTensor(classes).to(torch.device("cuda"))
 outputs["instances"].pred_classes = classes
 print(classes)
 print('After' + str(outputs["instances"].pred_classes))
@@ -98,5 +108,9 @@ print('After' + str(outputs["instances"].pred_classes))
 v = Visualizer(im[:, :, ::-1], MetadataCatalog.get(cfg.DATASETS.TRAIN[0]), scale=1.2)
 v = v.draw_instance_predictions(outputs['instances'].to('cpu'))
 img = v.get_image()[:, :, ::-1]
-cv2.imwrite('output_' + file_name + '.jpg', img)
+
+save_dir = MODEL_PATH + 'images/'
+if not os.path.exists(save_dir):
+    os.makedirs(save_dir)
+cv2.imwrite(save_dir + 'output_' + file_name, img)
 
