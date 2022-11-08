@@ -28,6 +28,10 @@ __all__ = ["load_voc_instances", "register_pascal_voc"]
 # )
 # fmt: on
 
+SEASHIPS_CLASS_NAMES = [
+    "ore carrier", "bulk cargo carrier", "container ship", "general cargo ship", "fishing boat", "passenger ship"
+]
+
 VOC_CLASS_NAMES_COCOFIED = [
     "airplane",  "dining table", "motorcycle",
     "potted plant", "couch", "tv"
@@ -68,6 +72,7 @@ T4_CLASS_NAMES = [
 UNK_CLASS = ["unknown"]
 
 VOC_COCO_CLASS_NAMES = tuple(itertools.chain(VOC_CLASS_NAMES, T2_CLASS_NAMES, T3_CLASS_NAMES, T4_CLASS_NAMES, UNK_CLASS))
+SEAHSIPS_CLASS_NAMES = tuple(itertools.chain(SEASHIPS_CLASS_NAMES, T2_CLASS_NAMES, T3_CLASS_NAMES, T4_CLASS_NAMES, UNK_CLASS))
 
 def load_voc_instances(dirname: str, split: str, class_names: Union[List[str], Tuple[str, ...]]):
     """
@@ -134,7 +139,7 @@ def register_pascal_voc(name, dirname, split, year):
     #     class_names = VOC_COCO_CLASS_NAMES
     # else:
     #     class_names = tuple(VOC_CLASS_NAMES)
-    class_names = VOC_COCO_CLASS_NAMES
+    class_names = VOC_COCO_CLASS_NAMES   # SEAHSIPS_CLASS_NAMES
     DatasetCatalog.register(name, lambda: load_voc_instances(dirname, split, class_names))
     MetadataCatalog.get(name).set(
         thing_classes=list(class_names), dirname=dirname, year=year, split=split
