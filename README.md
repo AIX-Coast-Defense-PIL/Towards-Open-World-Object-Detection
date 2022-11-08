@@ -44,11 +44,19 @@ wget --load-cookies ~/cookies.txt "https://docs.google.com/uc?export=download&co
 (4) Put the content of datasets/OWOD_imagesets inside datasets/VOC2007/ImageSets/Main
 
 
-## basic train command
+## basic command
+- train
 ```
-python tools/train_net.py --num-gpus 1 --config-file OWOD/t1/t1_train.yaml SOLVER.IMS_PER_BATCH 4 SOLVER.BASE_LR 0.005
+python tools/train_net.py --num-gpus 1 --config-file configs/OWOD/t1/t1_train.yaml SOLVER.IMS_PER_BATCH 2 SOLVER.BASE_LR 0.005
 ```
-
+- evaluate
+```
+python tools/train_net.py --num-gpus 1 --config-file ./configs/OWOD/t1/t1_val.yaml SOLVER.IMS_PER_BATCH 2 SOLVER.BASE_LR 0.01 OWOD.TEMPERATURE 1.5 MODEL.WEIGHTS "./output/pascalVOCnSeaShips/basic01/model_final.pth"
+``` 
+<!-- - test
+```
+python tools/train_net.py --config-file configs/OWOD/t1/t1_val.yaml --eval-only MODEL.WEIGHTS output/pascalVOC/basic01/model_final.pth
+``` -->
 
 ## Reference
 
