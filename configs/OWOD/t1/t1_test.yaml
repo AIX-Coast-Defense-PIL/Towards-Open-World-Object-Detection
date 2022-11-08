@@ -1,6 +1,6 @@
 _BASE_: "../../Base-RCNN-C4-OWOD.yaml"
 MODEL:
-  WEIGHTS: "/home/joseph/workspace/OWOD/output/t1_clustering_with_save/model_final.pth"
+  WEIGHTS: "output/pascalVOCnSeaShips/basic01/model_final.pth"
   ROI_HEADS:
     NMS_THRESH_TEST: 0.4
 TEST:
@@ -12,7 +12,7 @@ SOLVER:
   STEPS: (12000, 16000)
   MAX_ITER: 18000
   WARMUP_ITERS: 100
-OUTPUT_DIR: "./output/temp_3"
+OUTPUT_DIR: "output/pascalVOCnSeaShips/basic01"
 OWOD:
   PREV_INTRODUCED_CLS: 0
   CUR_INTRODUCED_CLS: 20
